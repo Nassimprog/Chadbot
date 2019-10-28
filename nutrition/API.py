@@ -6,6 +6,7 @@ import requests
 import json
 
 
+
 def recipeInfo(userMessage):
     # Get UserInput
     userInput = userMessage
@@ -41,7 +42,7 @@ def recipeInfo(userMessage):
 
 
 def nutInfo(userMessage):
-    # Geting UserInput
+    # Getting UserInput
     userInput = userMessage
     userInput = userInput.replace(" ", "+") #  format the url with the message input
     print("User asked for: " + userInput + "\n")
@@ -69,7 +70,7 @@ def nutInfo(userMessage):
     r_fat = r_nutrients['FAT']['quantity']
     r_sugar = r_nutrients['SUGAR']['quantity']
     r_carb = r_nutrients['CHOCDF']['quantity']
-    r_fibre = r_nutrients['FIBTG']['quantity']
+    #r_fibre = r_nutrients['FIBTG']['quantity']
     r_protein = r_nutrients['PROCNT']['quantity']
 
 # print Label + URL
@@ -80,6 +81,6 @@ def nutInfo(userMessage):
     print('This recipe has: ' + str(r_fat) + " grams of fat" +"\n")
     print('This recipe has: ' + str(r_sugar) + " grams of sugar" +"\n")
     print('This recipe has: ' + str(r_carb) + " grams of carb" +"\n")
-    print('This recipe has: ' + str(r_fibre) + " grams of fibre" +"\n")
+    #print('This recipe has: ' + str(r_fibre) + " grams of fibre" +"\n")
     print('This recipe has: ' + str(r_protein) + " grams of protein" +"\n")
-    return(r_diet,  r_calories, r_health, r_fat, r_sugar, r_carb, r_fibre, r_protein)
+    return(r_diet,  r_calories, r_health, r_fat, r_sugar, r_carb, r_protein)
