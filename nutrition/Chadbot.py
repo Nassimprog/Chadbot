@@ -8,9 +8,14 @@ from API import nutInfo
 from discord.ext import commands
 from random import randint
 
+###################### Based on Discord Template from : (URL goes here)         In order to turn
+#
+
 client = commands.Bot(command_prefix = '.')
 
-@client.event
+
+
+@client.event #
 async def on_ready():
     print('Bot is ready!')
 
@@ -34,17 +39,18 @@ client = commands.Bot(command_prefix = '.')
 async def on_ready():
     print('Bot is ready.')
     
+#
+########################## END OF ##############
 
 
-#userMessage = ""
 
 @client.event
 async def on_message(message):
   
     userMessage = message.content
     rDisplay = recipeInfo(userMessage)
-    nutVar = nutInfo(userMessage)
-    nDisplay = str(nutVar)
+    
+    #nDisplay = str(nutVar)
     # Display Recipe
     # [0] is the name of recipe [1] is the ingredients [2] is url and image [3] is out of range
     if 'recipe' in userMessage.lower():
@@ -56,7 +62,7 @@ async def on_message(message):
         await message.channel.send(rDisplay[2])
         
         await message.channel.send('═══════════════════ ≪ °❈ Ingredients ❈° ≫ ══════════════════\n')
-        for i in range(10): # to display the ingredients in a readable list
+        for i in range(15): # to display the ingredients in a readable list
             await message.channel.send(rDisplay[1][i])
         
         
@@ -65,8 +71,19 @@ async def on_message(message):
     
     # Display Nutrition
     if 'nutrition' in userMessage.lower():
+        nDisplay = nutInfo(userMessage)
+        await message.channel.send(str(nDisplay[0]) + "\n")
+        await message.channel.send(str(nDisplay[1]) + "\n"  )
+        await message.channel.send('calories: ' +  str(nDisplay[2]) + " kcal" + "\n")
+        for i in range(5):
+            await message.channel.send('This is: ' + str(nDisplay[3][i]) + "\n")
+        await message.channel.send('This has: ' + str(nDisplay[4]) + " grams of fat" +"\n")
+        await message.channel.send('This has: ' + str(nDisplay[5]) + " grams of sugar" +"\n")
+        await message.channel.send('This has: ' + str(nDisplay[6]) + " grams of carb" +"\n")
+        #await message.channel.send('This recipe has: ' + nDisplay[2] + " grams of fibre" +"\n")
+        await message.channel.send('This has: ' + str(nDisplay[7]) + " grams of protein" +"\n")
+
         
-        await message.channel.send(nDisplay)
         print(userMessage)
 
 
