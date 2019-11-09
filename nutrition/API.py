@@ -1,10 +1,9 @@
-food_databaseAPI = '7c743310345e454a3eb2765cc24a1c6b' # 8ff5b715 ID
-nutritionAPI = 'af38cdc7938a20e1ec7b5091f0a20cd3' # 5d56c6d1 ID
-recipeAPI = '993cf0b188961b141c8e85799bdbae6f' # 52190d04 ID
-
 import requests
 import json
 
+food_databaseAPI = '7c743310345e454a3eb2765cc24a1c6b' # 8ff5b715 ID
+nutritionAPI = 'af38cdc7938a20e1ec7b5091f0a20cd3' # 5d56c6d1 ID
+recipeAPI = '993cf0b188961b141c8e85799bdbae6f' # 52190d04 ID
 
 
 def recipeInfo(userMessage):
@@ -29,16 +28,13 @@ def recipeInfo(userMessage):
     r_ingredients = r_recipe['ingredientLines']
     r_shareUrl = r_recipe['shareAs']
     r_label = r_recipe['label']
-    
-    
+        
 
 #  print URL + Label + nutrition
     
     print(r_label + "\n")
     print(r_shareUrl + "\n")
     return( r_label, r_ingredients, r_shareUrl)
-
-
 
 
 def nutInfo(userMessage):
@@ -61,7 +57,6 @@ def nutInfo(userMessage):
     r_label = r_recipe['label']
     r_nutrients = r_recipe['totalNutrients']
     
-
 # nutrition key mapping
     r_shareUrl = r_recipe['shareAs']
     r_diet = r_recipe['dietLabels']

@@ -8,68 +8,85 @@ from API import nutInfo
 from discord.ext import commands
 from random import randint
 
+from foodAPI import foodRecipe
+from messageRecognition import Recognition
+from googleNearestPlacesAPI import NearestPlace
+
 ###################### Based on Discord Template from : (URL goes here)         In order to turn
 #
 
 client = commands.Bot(command_prefix = '.')
 
 
+###### Standard Functions #######
 
-@client.event #
+# Bot is ready.
+@client.event 
 async def on_ready():
     print('Bot is ready!')
 
+# Member Joined channel.
 @client.event
 async def on_member_join(member):
     print('{member} has joined the server!')
 
+# Member Left channel.
 @client.event
 async def on_member_remove(member):
     print('{member} has left the server!')
 
 
 
+##### On UserMessage ######
 
-
-# Set command prefix
-client = commands.Bot(command_prefix = '.')
-
-# Events, bot ready check
-@client.event
-async def on_ready():
-    print('Bot is ready.')
-    
-#
-########################## END OF ##############
-
-
-
+# User Message Events.
 @client.event
 async def on_message(message):
   
     userMessage = message.content
     rDisplay = recipeInfo(userMessage)
     
-    #nDisplay = str(nutVar)
-    # Display Recipe
-    # [0] is the name of recipe [1] is the ingredients [2] is url and image [3] is out of range
-    if 'recipe' in userMessage.lower():
-        #displaying it all on discord
-        await message.channel.send('════════════════════ ≪ °❈ Name ❈° ≫ ════════════════════\n')
-        
-        await message.channel.send(rDisplay[0])
-        
-        await message.channel.send(rDisplay[2])
-        
-        await message.channel.send('═══════════════════ ≪ °❈ Ingredients ❈° ≫ ══════════════════\n')
-        for i in range(15): # to display the ingredients in a readable list
-            await message.channel.send(rDisplay[1][i])
-        
-        
-        
-        
-    
-    # Display Nutrition
+    # Check if the user wants recipe.
+    if '.recipe' in userMessage:
+
+        # Get rid of the front part, and send Reply.
+        userMessageModified = userMessage[8:]
+        myList = foodRecipe(Recognition(userMessageModified))
+
+        # Show Bots recommendations (Messages)
+        await message.channel.send('**Recipe name:**')
+        await message.channel.send('~ ' + myList[0])
+
+        # DISPLAY INGREDIENTS
+        await message.channel.send('___________')
+        await message.channel.send('**List of ingredients:**')
+        for i in range(3):
+            await message.channel.send('~ ' + myList[1][i])
+
+        # Display WebPage
+        await message.channel.send('...')
+        await message.channel.send('___________')
+        await message.channel.send('**For full list visit:** ' + myList[2])
+
+    # Check if user wants location.
+    if '.location' in userMessage:
+        userMessageModified = userMessage[10:]
+
+        # Get the list with Names and Addresses of the places.
+        myList = NearestPlace(userMessageModified)
+
+        # Separete Names from Addresses.
+        myNameList = myList[0]
+        myAddressList = myList[1]
+
+        # Print them out back to user.
+        await message.channel.send('*** Here are 3 nearest locations***')
+        for i in range(3):
+            await message.channel.send('___________')
+            await message.channel.send('~ ***Name of the place:*** ' + myNameList[i])
+            await message.channel.send('~ ***Address of the place:*** ' + myAddressList[i])
+
+    # Display Nutrition.
     if 'nutrition' in userMessage.lower():
         nDisplay = nutInfo(userMessage)
         await message.channel.send(str(nDisplay[0]) + "\n")
@@ -86,11 +103,12 @@ async def on_message(message):
         
         print(userMessage)
 
-
+    # Display Random Surprise Recipe
     if 'surprise' in userMessage.lower():
         RNG = random.randint(0, 148)
         UserMessage = ('recipe ' + str(RNG))
         await message.channel.send('recipe ' + str(RNG))
 
 
+# Run bot with this ID
 client.run('NjMxNDk2NTc1OTMxMTIxNjk0.XZ4SDQ.GAkS4ucOyN9v5Dd1617tMr-EzDo')
