@@ -15,7 +15,7 @@ from messageRecognition import Recognition
 from googleNearestPlacesAPI import NearestPlace
 
 from mainF import searchByIngredient
-
+from mainF import searchByName
 
 
 # Set command prefix
@@ -122,7 +122,40 @@ async def on_message(message):          # <<<< on_message function dicovered fro
 
         await message.channel.send('~' + myList[0])
         await message.channel.send('~' + myList[1])
-        
+    
+    if '.cocktailName' in userMessage:
+        userMessageModified = userMessage[15:]
+
+        await message.channel.send('**Cocktail.**')     
+        await message.channel.send('___________')
+
+        myList = searchByName(Recognition(userMessageModified))
+
+        for i in range(0,10): 
+            
+            await message.channel.send('~' + myList[i])
+       
+    if '.cocktailSurprise' in userMessage:
+        userMessageModified = userMessage[20:]
+
+        await message.channel.send('**Random Cocktail.**')     
+        await message.channel.send('___________')  
+
+        myList = searchByName(Recognition(userMessageModified))
+
+        for u in range(0,10):
+
+            await message.channel.send('~' + myList[u])
+
+
+
+
+
+
+
+
+
+
 
 # Run bot with this ID
 client.run('NjMxNDk2NTc1OTMxMTIxNjk0.XZ4SDQ.GAkS4ucOyN9v5Dd1617tMr-EzDo')

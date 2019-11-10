@@ -14,10 +14,9 @@ def searchByIngredient(ingredient):
     myList = ['','']
     myList[0] = results['drinks'][0]['strDrink']
     myList[1] = results['drinks'][0]['strDrinkThumb']
-
-
-    return(myList)
     
+    return myList
+
 
 def listIngredients():
     '''searchs cocktailAPI for the list of all ingredients available'''
@@ -25,7 +24,7 @@ def listIngredients():
     results = cocktailProviders.getIngredients()
 
     for i in range(len(results['drinks'])):
-       print('All Ingredients: ',results['drinks'][i]['strIngredient1'],'\n')
+      print ('All Ingredients: ',results['drinks'][i]['strIngredient1'],'\n')
 
  
 def searchByName(name):
@@ -34,25 +33,22 @@ def searchByName(name):
     name: string
     '''
     results = cocktailProviders.getCocktailByName(name)
-    for i in range(len(results["drinks"])):
-        print("Name: ",results['drinks'][i]['strDrink'],'\n')
-    for i in range(len(results["drinks"])):
-        print("filter: ",results['drinks'][i]['strAlcoholic'],'\n')
-    for a in range(len(results['drinks'])):
-        print('Instructions: ',results['drinks'][a]['strInstructions'],'\n')
-    for u in range(len(results['drinks'])):
-        print('Ingredients: ','\n')
-        print(results['drinks'][u]['strIngredient1'])  
-        print(results['drinks'][u]['strIngredient2'])
-        print(results['drinks'][u]['strIngredient3']) 
-        print(results['drinks'][u]['strIngredient4']) 
-        print(results['drinks'][u]['strIngredient5'])
-        print(results['drinks'][u]['strIngredient6'])
-        print(results['drinks'][u]['strIngredient7'])
-        print(results['drinks'][u]['strIngredient8'])
-        print(results['drinks'][u]['strIngredient9'])
-    for o in range(len(results['drinks'])):
-        print('image: ',results['drinks'][o]['strDrinkThumb'],'\n')    
+    
+    myList = ['','','','','','','','','','']
+    
+    myList[0] = results['drinks'][0]['strDrink']
+    myList[1] = results['drinks'][0]['strAlcoholic']
+    myList[2] = results['drinks'][0]['strInstructions']
+    myList[3] = results['drinks'][0]['strIngredient1']
+    myList[4] = results['drinks'][0]['strIngredient2']
+    myList[5] = results['drinks'][0]['strIngredient3']
+    myList[6] = results['drinks'][0]['strIngredient4']
+    myList[7] = results['drinks'][0]['strIngredient5']
+    myList[8] = results['drinks'][0]['strIngredient6']
+    myList[9] = results['drinks'][0]['strDrinkThumb']
+    
+    return myList
+
 
 
 def randomCocktail():
@@ -60,23 +56,22 @@ def randomCocktail():
     
     results = cocktailProviders.getRandomCocktail()
 
-    for p in range(len(results['drinks'])):
-        print('name: ',results['drinks'][p]['strDrink'],'\n')
-    for i in range(len(results["drinks"])):
-        print("filter: ",results['drinks'][i]['strAlcoholic'],'\n')
-    for a in range(len(results['drinks'])):
-        print('Instructions: ',results['drinks'][a]['strInstructions'],'\n')
-    for u in range(len(results['drinks'])):
-        print('Ingredients: ','\n')
-        print(results['drinks'][u]['strIngredient1'])  
-        print(results['drinks'][u]['strIngredient2'])
-        print(results['drinks'][u]['strIngredient3']) 
-        print(results['drinks'][u]['strIngredient4']) 
-        print(results['drinks'][u]['strIngredient5'])
-        print(results['drinks'][u]['strIngredient6'])
-        print(results['drinks'][u]['strIngredient7'])
-        print(results['drinks'][u]['strIngredient8'])
-        print(results['drinks'][u]['strIngredient9'])
-    for o in range(len(results['drinks'])):
-        print('image: ',results['drinks'][o]['strDrinkThumb'],'\n')    
+    myList = ['','','','','','','','','','']
+
+    myList[0] = results['drinks'][0]['strDrink']
+    myList[1] = results['drinks'][0]['strAlcoholic']
+    myList[2] = results['drinks'][0]['strInstructions']
+    myList[3] = results['drinks'][0]['strIngredient1']
+    myList[4] = results['drinks'][0]['strIngredient2']
+    myList[5] = results['drinks'][0]['strIngredient3']
+    myList[6] = results['drinks'][0]['strIngredient4']
+    myList[7] = results['drinks'][0]['strIngredient5']
+    myList[8] = results['drinks'][0]['strIngredient6']
+    myList[9] = results['drinks'][0]['strDrinkThumb']
+
+    return myList 
+
+print(randomCocktail())    
+
+       
     
