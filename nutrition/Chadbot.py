@@ -1,27 +1,29 @@
+# Discord modules
+#   <<<< Modules use was inspired by Youtube video: "https://www.youtube.com/watch?v=nomK9TIuxwM"
 import discord
 import random
 import asyncio
-
-# My modules
-from API import recipeInfo
-from API import nutInfo
 from discord.ext import commands
 from random import randint
+
+# Our modules
+from API import recipeInfo
+from API import nutInfo
 
 from foodAPI import foodRecipe
 from messageRecognition import Recognition
 from googleNearestPlacesAPI import NearestPlace
 
-###################### Based on Discord Template from : (URL goes here)         In order to turn
-#
 
-client = commands.Bot(command_prefix = '.')
+
+# Set command prefix
+client = commands.Bot(command_prefix = '.')  # <<<< Prefix setting inspired by: "https://www.youtube.com/watch?v=nW8c7vT6Hl4" although not utilized.
 
 
 ###### Standard Functions #######
 
 # Bot is ready.
-@client.event 
+@client.event               # <<<< Basic on_ready fucntion "https://www.youtube.com/watch?v=nW8c7vT6Hl4"
 async def on_ready():
     print('Bot is ready!')
 
@@ -41,10 +43,9 @@ async def on_member_remove(member):
 
 # User Message Events.
 @client.event
-async def on_message(message):
+async def on_message(message):          # <<<< on_message function dicovered from: "https://www.youtube.com/watch?v=XjfxYfKFXO8&t=716s"
   
     userMessage = message.content
-    rDisplay = recipeInfo(userMessage)
     
     # Check if the user wants recipe.
     if '.recipe' in userMessage:
@@ -87,7 +88,7 @@ async def on_message(message):
             await message.channel.send('~ ***Address of the place:*** ' + myAddressList[i])
 
     # Display Nutrition.
-    if 'nutrition' in userMessage.lower():
+    if '.nutrition' in userMessage.lower():
         nDisplay = nutInfo(userMessage)
         await message.channel.send(str(nDisplay[0]) + "\n")
         await message.channel.send(str(nDisplay[1]) + "\n"  )
@@ -104,7 +105,7 @@ async def on_message(message):
         print(userMessage)
 
     # Display Random Surprise Recipe
-    if 'surprise' in userMessage.lower():
+    if '.surprise' in userMessage.lower():
         RNG = random.randint(0, 148)
         UserMessage = ('recipe ' + str(RNG))
         await message.channel.send('recipe ' + str(RNG))

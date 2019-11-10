@@ -1,6 +1,8 @@
 def Recognition(userMessage):
     
-    # List of foods to search.
+    # Lists of words to search for.
+    
+    # <<< List of vegetables and fruits combined tugether from: "https://simple.wikipedia.org/wiki/List_of_vegetables"  and  "https://simple.wikipedia.org/wiki/List_of_fruits"
     foodList = ['corn','beef', 'popcorn', 'pork', 'chicken', 'artichoke'
                 ,'aubergine',
                 'eggplant',
@@ -264,7 +266,9 @@ def Recognition(userMessage):
                 ,'Pumpkin'
                 ,'Squash'
                 ,'Tomato'
-                ,'Zucchini']
+                , 'Zucchini']  
+    
+    # Personal lists
     wordsNotList = ['n\'t', 'not', 'without', 'no']
     wordsYesList = ['want', 'need', 'should', 'could', 'must', 'have to', 'give me']
     wordsReverseList = ['but', 'altho', 'however', 'Although']
@@ -281,14 +285,10 @@ def Recognition(userMessage):
     userList = userMessage.split(' ')
 
     # Remove duplicates from my List
-    foodList = list(dict.fromkeys(foodList))
-    #print(foodList)
+    foodList = list(dict.fromkeys(foodList))     # <<< Line used and modified from: "https://www.w3schools.com/python/python_howto_remove_duplicates.asp"
 
     # Check if user message.
     for i in range(len(userList)):
-
-        
-        ###### Check the meaning of words #####
 
         # Check if the word is Negative.
         for y in range(len(wordsNotList)):
@@ -310,38 +310,41 @@ def Recognition(userMessage):
             if wordsYesList[y] in userList[i] and foodWant == 0:
                 isWanted = True
 
-
-        ###### Adding Words to the Right lists. ########
-
         # Add the words to their Respective Lists
         if isWanted == True:
 
             # Add food to Edible food list.
             for y in range(len(foodList)):
+                foodList[y] = foodList[y].lower()
+                userList[i] = userList[i].lower()
 
-                if foodList[y].lower() in userList[i].lower():
-                    edibleList.append(foodList[y].lower())
+                if foodList[y] in userList[i]:
+                    edibleList.append(foodList[y])
 
-                    if foodList[y].lower() in nonEdibleList:
-                        nonEdibleList.remove(foodList[y].lower())
+                    if foodList[y] in nonEdibleList:
+                        nonEdibleList.remove(foodList[y])
 
         else:
             # Add food to Non Edible food list.
             for y in range(len(foodList)):
+                foodList[y] = foodList[y].lower()
+                userList[i] = userList[i].lower()
 
-                if foodList[y].lower() in userList[i].lower():
-                    nonEdibleList.append(foodList[y].lower())
+                if foodList[y] in userList[i]:
+                    nonEdibleList.append(foodList[y])
                     foodWant = 0
 
-                    if foodList[y].lower() in edibleList:
-                        edibleList.remove(foodList[y].lower())
+                    if foodList[y] in edibleList:
+                        edibleList.remove(foodList[y])
 
 
     # Remove duplicates form the LISTS
-    edibleList = list(dict.fromkeys(edibleList))
-    nonEdibleList = list(dict.fromkeys(nonEdibleList))
+    # <<< Lines used and modified from: "https://www.w3schools.com/python/python_howto_remove_duplicates.asp"
+    edibleList = list(dict.fromkeys(edibleList))        
+    nonEdibleList = list(dict.fromkeys(nonEdibleList))  
 
     return(edibleList)
 
 
-#print(Recognition('.recipe Hi there, I want something with mango, chicken actually I don\'t want mango but give me lemon.'))
+# print(Recognition('.recipe Hi there, I want something with mango, chicken actually I don\'t want mango but give me lemon.'))
+# print(Recognition('.recipe Hi there give me chicken and mango, but no apples or actually no chicken.'))
