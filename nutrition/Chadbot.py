@@ -14,6 +14,8 @@ from foodAPI import foodRecipe
 from messageRecognition import Recognition
 from googleNearestPlacesAPI import NearestPlace
 
+from mainF import searchByIngredient
+
 
 
 # Set command prefix
@@ -51,7 +53,6 @@ async def on_message(message):          # <<<< on_message function dicovered fro
     if '.recipe' in userMessage:
 
         # Get rid of the front part, and send Reply.
-        userMessageModified = userMessage[8:]
         myList = foodRecipe(Recognition(userMessageModified))
 
         # Show Bots recommendations (Messages)
@@ -110,6 +111,18 @@ async def on_message(message):          # <<<< on_message function dicovered fro
         UserMessage = ('recipe ' + str(RNG))
         await message.channel.send('recipe ' + str(RNG))
 
+    # Display Cocktails
+    if '.cocktailIngredient' in userMessage:
+        userMessageModified = userMessage[20:]
+
+        await message.channel.send('**Cocktails found for you.**')
+        await message.channel.send('___________')
+        
+        myList = searchByIngredient(Recognition(userMessageModified))
+
+        await message.channel.send('~' + myList[0])
+        await message.channel.send('~' + myList[1])
+        
 
 # Run bot with this ID
 client.run('NjMxNDk2NTc1OTMxMTIxNjk0.XZ4SDQ.GAkS4ucOyN9v5Dd1617tMr-EzDo')
