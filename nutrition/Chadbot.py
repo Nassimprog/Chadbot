@@ -7,15 +7,12 @@ from discord.ext import commands
 from random import randint
 
 # Our modules
-from API import recipeInfo
-from API import nutInfo
-
-from foodAPI import foodRecipe
+from foodAPI import *
 from messageRecognition import Recognition
 from googleNearestPlacesAPI import NearestPlace
 
-from mainF import searchByIngredient
-from mainF import searchByName
+from mainF import *
+
 
 
 # Set command prefix
@@ -47,115 +44,136 @@ async def on_member_remove(member):
 @client.event
 async def on_message(message):          # <<<< on_message function dicovered from: "https://www.youtube.com/watch?v=XjfxYfKFXO8&t=716s"
   
-    userMessage = message.content
-    
-    # Check if the user wants recipe.
-    if '.recipe' in userMessage:
+    # Check if the message is from user.
+    if message.author != client.user:
 
-        # Get rid of the front part, and send Reply.
-        myList = foodRecipe(Recognition(userMessageModified))
+        # Get the users message.
+        userMessage = message.content
+        userMessage = userMessage.lower()  # avoids case sensitivity
+        
+        # Check if the user wants recipe.
+        if 'recipe' in userMessage:
+            userMessageModified = userMessage[7:]
+        
 
-        # Show Bots recommendations (Messages)
-        await message.channel.send('**Recipe name:**')
-        await message.channel.send('~ ' + myList[0])
+            # Get rid of the front part, and send Reply.
+            myList = foodRecipe(Recognition(userMessageModified))
 
-        # DISPLAY INGREDIENTS
-        await message.channel.send('___________')
-        await message.channel.send('**List of ingredients:**')
-        for i in range(3):
-            await message.channel.send('~ ' + myList[1][i])
+            # Show Bots recommendations (Messages)
+            await message.channel.send('**Recipe name:**')
+            await message.channel.send('~ ' + myList[0])
 
-        # Display WebPage
-        await message.channel.send('...')
-        await message.channel.send('___________')
-        await message.channel.send('**For full list visit:** ' + myList[2])
-
-    # Check if user wants location.
-    if '.location' in userMessage:
-        userMessageModified = userMessage[10:]
-
-        # Get the list with Names and Addresses of the places.
-        myList = NearestPlace(userMessageModified)
-
-        # Separete Names from Addresses.
-        myNameList = myList[0]
-        myAddressList = myList[1]
-
-        # Print them out back to user.
-        await message.channel.send('*** Here are 3 nearest locations***')
-        for i in range(3):
+            # DISPLAY INGREDIENTS
             await message.channel.send('___________')
-            await message.channel.send('~ ***Name of the place:*** ' + myNameList[i])
-            await message.channel.send('~ ***Address of the place:*** ' + myAddressList[i])
-
-    # Display Nutrition.
-    if '.nutrition' in userMessage.lower():
-        nDisplay = nutInfo(userMessage)
-        await message.channel.send(str(nDisplay[0]) + "\n")
-        await message.channel.send(str(nDisplay[1]) + "\n"  )
-        await message.channel.send('calories: ' +  str(nDisplay[2]) + " kcal" + "\n")
-        for i in range(5):
-            await message.channel.send('This is: ' + str(nDisplay[3][i]) + "\n")
-        await message.channel.send('This has: ' + str(nDisplay[4]) + " grams of fat" +"\n")
-        await message.channel.send('This has: ' + str(nDisplay[5]) + " grams of sugar" +"\n")
-        await message.channel.send('This has: ' + str(nDisplay[6]) + " grams of carb" +"\n")
-        #await message.channel.send('This recipe has: ' + nDisplay[2] + " grams of fibre" +"\n")
-        await message.channel.send('This has: ' + str(nDisplay[7]) + " grams of protein" +"\n")
-
-        
-        print(userMessage)
-
-    # Display Random Surprise Recipe
-    if '.surprise' in userMessage.lower():
-        RNG = random.randint(0, 148)
-        UserMessage = ('recipe ' + str(RNG))
-        await message.channel.send('recipe ' + str(RNG))
-
-    # Display Cocktails
-    if '.cocktailIngredient' in userMessage:
-        userMessageModified = userMessage[20:]
-
-        await message.channel.send('**Cocktails found for you.**')
-        await message.channel.send('___________')
-        
-        myList = searchByIngredient(Recognition(userMessageModified))
-
-        await message.channel.send('~' + myList[0])
-        await message.channel.send('~' + myList[1])
-    
-    if '.cocktailName' in userMessage:
-        userMessageModified = userMessage[15:]
-
-        await message.channel.send('**Cocktail.**')     
-        await message.channel.send('___________')
-
-        myList = searchByName(Recognition(userMessageModified))
-
-        for i in range(0,10): 
+            await message.channel.send('**List of ingredients:**')
             
-            await message.channel.send('~' + myList[i])
+            lenOfMyList = len(myList[1])
+
+            if lenOfMyList >= 3:
+                    lenOfMyList = 3
+
+            for i in range(lenOfMyList):
+                await message.channel.send('~ ' + myList[1][i])
+
+            # Display WebPage
+            await message.channel.send('...')
+            await message.channel.send('___________')
+            await message.channel.send('**For full list visit:** ' + myList[2])
+
+        # Check if user wants location.
+        if 'location' in userMessage:
+            userMessageModified = userMessage[9:]
+
+            # Get the list with Names and Addresses of the places.
+            myList = NearestPlace(userMessageModified)
+
+            lenOfMyList = len(myList[1])
+
+            if lenOfMyList >= 3:
+                    lenOfMyList = 3
+
+            # Separete Names from Addresses.
+            myNameList = myList[0]
+            myAddressList = myList[1]
+
+            # Print them out back to user.
+            await message.channel.send('*** Here are 3 nearest locations***')
+            for i in range(lenOfMyList):
+                await message.channel.send('___________')
+                await message.channel.send('~ ***Name of the place:*** ' + myNameList[i])
+                await message.channel.send('~ ***Address of the place:*** ' + myAddressList[i])
+
+          # Display Nutrition.
        
-    if '.cocktailSurprise' in userMessage:
-        userMessageModified = userMessage[20:]
+        # Display nutritions
+        if 'nutrition' in userMessage:
+            userMessageModified = userMessage[9:]
+            nDisplay = nutInfo(userMessageModified)
+            nLIST = len(nDisplay[2])
+            ''' To display the nutrition '''
+            await message.channel.send(str(nDisplay[0]) + "\n")
+            for i in range(nLIST):
+                await message.channel.send('This is: ' + str(nDisplay[2][i]) + ".\n")
+            await message.channel.send('This has: ' + str(nDisplay[1]) + " kcal (calories)." + "\n")
+            await message.channel.send('This has: ' + str(nDisplay[3]) + " grams of fat." + "\n")
+            await message.channel.send('This has: ' + str(nDisplay[4]) + " grams of sugar." + "\n")
+            await message.channel.send('This has: ' + str(nDisplay[5]) + " grams of carb." + "\n")
+            await message.channel.send('This has: ' + str(nDisplay[6]) + " grams of protein." + "\n")
+            
+            print(userMessage)
 
-        await message.channel.send('**Random Cocktail.**')     
-        await message.channel.send('___________')  
+        if 'surprise' in userMessage.lower():
+                ''' to search for a recipe by number '''
+                RNG = random.randint(0, 148)
 
-        myList = searchByName(Recognition(userMessageModified))
+                rDisplay = foodRecipe(str(RNG))
 
-        for u in range(0,10):
+                rLIST = len(rDisplay[1])
+                if rLIST >= 3:
+                    rLIST = 3
+                print(rLIST)
+                await message.channel.send('════ ≪ °❈ Name ❈° ≫ ════\n')
 
-            await message.channel.send('~' + myList[u])
+                await message.channel.send(rDisplay[0])
 
+                await message.channel.send('════ ≪ °❈ Ingredients ❈° ≫ ════\n')
+                
+                for i in range(rLIST):  # to display the ingredients in a readable listnagain
+                    await message.channel.send(rDisplay[1][i])
+                
+                await message.channel.send('════ ≪ °❈ Link ❈° ≫ ════\n')
+                await message.channel.send(rDisplay[2])
 
+        # Display Cocktails
+        if 'cocktailingredient' in userMessage:
+            userMessageModified = userMessage[19:]
 
+            await message.channel.send('**Cocktails found for you.**')
+            await message.channel.send('___________')
+            
+            myList = searchByIngredient(userMessageModified)
 
+            await message.channel.send('~' + myList[0])
+            await message.channel.send('~' + myList[1])
+            
+        if 'cocktailname' in userMessage:
+            userMessageModified = userMessage[13:]
 
+            await message.channel.send('**Cocktail.**')
+            await message.channel.send('___________')
 
+            myList = searchByName(userMessageModified)
 
+            for i in range(6):
 
+                await message.channel.send('~' + myList[i])
 
+        if 'randomcocktail' in userMessage:
+            userMessageModified = userMessage[14:]
 
+            await message.channel.send('**Random Cocktail.**')
+            await message.channel.send('___________')
+            await message.channel.send('~' + randomCocktail())
 
 # Run bot with this ID
 client.run('NjMxNDk2NTc1OTMxMTIxNjk0.XZ4SDQ.GAkS4ucOyN9v5Dd1617tMr-EzDo')

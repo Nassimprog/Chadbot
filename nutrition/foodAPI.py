@@ -12,14 +12,6 @@ def foodRecipe(userMessage):
             userInput += ' '
     userInput = userInput.replace(' ', '+')
 
-    # Check if the First Letter is '+' and exclude it.
-    if userInput[0] == '+':
-        userInput = userInput[1:len(userInput)]
-
-    # Check if the last letter is '+' and exclude it.
-    if userInput[len(userInput)-1] == '+':
-        userInput = userInput[0:len(userInput)-1]
-
     # Display users request.
     print("User asked for: " + userInput + "\n")
 
@@ -46,3 +38,41 @@ def foodRecipe(userMessage):
     r_label = r_recipe['label']
 
     return[r_label, r_ingredients, r_shareUrl]
+
+# Nassim's Nutrition implementation.
+def nutInfo(userMessage):
+
+    # Getting UserInput
+    userInput = userMessage
+
+    # format the url with the message input
+    userInput = userInput.replace(" ", "+")
+
+    print("User asked for: " + userInput + "\n")
+
+    myUrl = "https://api.edamam.com/search?q=" + userInput + \
+        "&app_id=$8ff5b715&app_key=$7c743310345e454a3eb2765cc24a1c6b&from=0&to=3&calories=591-722&health=alcohol-free"
+
+    r = requests.get(myUrl)
+
+    # Access/request the part you need.
+    r_dict = r.json()
+    r_hits = r_dict['hits']
+
+    r_recipe = r_hits[0]['recipe']
+    r_label = r_recipe['label']
+    r_nutrients = r_recipe['totalNutrients']
+
+    # nutrition key mapping
+    r_shareUrl = r_recipe['shareAs']
+    r_diet = r_recipe['dietLabels']
+    r_calories = r_recipe['calories']
+    r_health = r_recipe['healthLabels']
+    r_fat = r_nutrients['FAT']['quantity']
+    r_sugar = r_nutrients['SUGAR']['quantity']
+    r_carb = r_nutrients['CHOCDF']['quantity']
+    r_protein = r_nutrients['PROCNT']['quantity']
+
+    # Ruturning data that is later put into List.
+    return(r_diet,  r_calories, r_health, r_fat, r_sugar, r_carb, r_protein)
+

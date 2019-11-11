@@ -26,5 +26,3 @@ def getCocktailByIngredient(ingredient):
 def getCocktailByName(name):
     params = {"s":name}
     return httpRequest('/search.php',params=params)
-     
-    

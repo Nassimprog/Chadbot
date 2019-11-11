@@ -3,7 +3,7 @@ def Recognition(userMessage):
     # Lists of words to search for.
     
     # <<< List of vegetables and fruits combined tugether from: "https://simple.wikipedia.org/wiki/List_of_vegetables"  and  "https://simple.wikipedia.org/wiki/List_of_fruits"
-    foodList = ['corn','beef', 'popcorn', 'pork', 'chicken', 'artichoke'
+    foodList = ['fish','corn','beef', 'popcorn', 'pork', 'chicken', 'artichoke'
                 ,'aubergine',
                 'eggplant',
                 'asparagus',

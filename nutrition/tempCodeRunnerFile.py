@@ -1,0 +1,10 @@
+
+    myList[1] = results['drinks'][0]['strAlcoholic']
+    myList[2] = results['drinks'][0]['strInstructions']
+    myList[3] = results['drinks'][0]['strIngredient1']
+    myList[4] = results['drinks'][0]['strIngredient2']
+    myList[5] = results['drinks'][0]['strIngredient3']
+    myList[6] = results['drinks'][0]['strIngredient4']
+    myList[7] = results['drinks'][0]['strIngredient5']
+    myList[8] = results['drinks'][0]['strIngredient6']
+    myList[9] = results['drinks'][0]['strDrinkThumb']
