@@ -3,7 +3,7 @@ import json
 
 headers = {
     'x-rapidapi-host': "the-cocktail-db.p.rapidapi.com",
-    'x-rapidapi-key': "540add6831msh2be37097a5ac45ap187522jsn439eee457bc9"
+    'x-rapidapi-key': "AddYourKey"
 }
 
 def httpRequest(pathname, params=()):
@@ -26,3 +26,4 @@ def getCocktailByIngredient(ingredient):
 def getCocktailByName(name):
     params = {"s":name}
     return httpRequest('/search.php',params=params)
+

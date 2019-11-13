@@ -13,6 +13,7 @@ from googleNearestPlacesAPI import NearestPlace
 
 from mainF import *
 
+from GoogleSearch import *
 
 
 # Set command prefix
@@ -95,6 +96,7 @@ async def on_message(message):          # <<<< on_message function dicovered fro
             # Separete Names from Addresses.
             myNameList = myList[0]
             myAddressList = myList[1]
+            myRatingList = myList[2]
 
             # Print them out back to user.
             await message.channel.send('*** Here are 3 nearest locations***')
@@ -102,6 +104,7 @@ async def on_message(message):          # <<<< on_message function dicovered fro
                 await message.channel.send('___________')
                 await message.channel.send('~ ***Name of the place:*** ' + myNameList[i])
                 await message.channel.send('~ ***Address of the place:*** ' + myAddressList[i])
+                await message.channel.send('~ ***Rating of the place:*** ' + myRatingList[i])
 
           # Display Nutrition.
        
@@ -119,8 +122,6 @@ async def on_message(message):          # <<<< on_message function dicovered fro
             await message.channel.send('This has: ' + str(nDisplay[4]) + " grams of sugar." + "\n")
             await message.channel.send('This has: ' + str(nDisplay[5]) + " grams of carb." + "\n")
             await message.channel.send('This has: ' + str(nDisplay[6]) + " grams of protein." + "\n")
-            
-            print(userMessage)
 
         if 'surprise' in userMessage.lower():
                 ''' to search for a recipe by number '''
@@ -138,7 +139,7 @@ async def on_message(message):          # <<<< on_message function dicovered fro
 
                 await message.channel.send('════ ≪ °❈ Ingredients ❈° ≫ ════\n')
                 
-                for i in range(rLIST):  # to display the ingredients in a readable listnagain
+                for i in range(rLIST):  # to display the ingredients in a readable list again
                     await message.channel.send(rDisplay[1][i])
                 
                 await message.channel.send('════ ≪ °❈ Link ❈° ≫ ════\n')
@@ -175,5 +176,18 @@ async def on_message(message):          # <<<< on_message function dicovered fro
             await message.channel.send('___________')
             await message.channel.send('~' + randomCocktail())
 
+        # Display Google Search Information
+        if 'googleseach' in userMessage:
+            userMessageModified = userMessage[12:]
+
+            myList = Search(userMessageModified)
+
+            snippet = myList[0]
+            linkToWeb = myList[1]
+
+            await message.channel.send('**Here are Google Search information: **')
+            await message.channel.send('-Snippet: ' + snippet)
+            await message.channel.send('-Link: ' + linkToWeb)
+
 # Run bot with this ID
-client.run('NjMxNDk2NTc1OTMxMTIxNjk0.XZ4SDQ.GAkS4ucOyN9v5Dd1617tMr-EzDo')
+client.run('AddYourKey')

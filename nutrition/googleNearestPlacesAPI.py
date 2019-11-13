@@ -1,7 +1,7 @@
 import requests  # <<<<< Module use was inspired by Youtube video: "https://www.youtube.com/watch?v=tb8gHvYlCFs&list=LLxk7l4FGLLteogNk27_nZEQ&index=46&t=264s"
 
 
-# Google API Places key: AIzaSyD9r3ZeVFzujJrqogY_3QiY9r_gdSQYm80
+# Google API Places key: No longer available
 def NearestPlace(userMessage):
 
         # Change the list input into a string
@@ -12,7 +12,7 @@ def NearestPlace(userMessage):
 
         # <<<<< Link obtained from official documentation of Google Places API "https://developers.google.com/places/web-service/search"
         myUrl = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + userInput + \
-                "&url,radius=1500&key=AIzaSyD9r3ZeVFzujJrqogY_3QiY9r_gdSQYm80"
+                "&url,radius=1500&key=UseYourKey"
 
         print(myUrl)
 
@@ -27,6 +27,7 @@ def NearestPlace(userMessage):
         # Put the first three addresses into a list and Return it.
         myAddressList = []
         myNameList = []
+        myRatingList = []
 
         # Get the Names.
         for i in range(3):
@@ -38,5 +39,10 @@ def NearestPlace(userMessage):
                 r_formatted_address = r_results[i]['formatted_address']
                 myAddressList.append(r_formatted_address)
 
+        # <<< Get the Ratings >>>
+        for i in range(3):
+                r_rating = r_results[i]['rating']
+                myRatingList.append(str(r_rating))
+
         # Return the Names and Addresses as a list.
-        return([myNameList, myAddressList])
+        return([myNameList, myAddressList, myRatingList])

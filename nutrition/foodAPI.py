@@ -1,6 +1,6 @@
 import requests  # <<<<< Module use was inspired from Youtube video: "https://www.youtube.com/watch?v=tb8gHvYlCFs&list=LLxk7l4FGLLteogNk27_nZEQ&index=46&t=264s"
 
-
+# Tom's original code.
 def foodRecipe(userMessage):
 
     ########## Editing User Message for url link ############
@@ -18,7 +18,7 @@ def foodRecipe(userMessage):
     # Set the URL
     # <<<<< Link structure obtained and modified from Edamam API documentation: "https://developer.edamam.com/edamam-docs-recipe-api"
     myUrl = "https://api.edamam.com/search?q=" + userInput + \
-        "&app_id=$55554362&app_key=$65a9ee67bc50f65260eeb2b7b0705164&from=0&to=3&calories=591-722&health=alcohol-free"
+        "&app_id=$55554362&app_key=AddYourKey&from=0&to=3&calories=591-722&health=alcohol-free"
 
     ########## Getting info #########
 
@@ -51,7 +51,7 @@ def nutInfo(userMessage):
     print("User asked for: " + userInput + "\n")
 
     myUrl = "https://api.edamam.com/search?q=" + userInput + \
-        "&app_id=$8ff5b715&app_key=$7c743310345e454a3eb2765cc24a1c6b&from=0&to=3&calories=591-722&health=alcohol-free"
+        "&app_id=$8ff5b715&app_key=AddYourKey&from=0&to=3&calories=591-722&health=alcohol-free"
 
     r = requests.get(myUrl)
 
