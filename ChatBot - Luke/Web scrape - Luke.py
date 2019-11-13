@@ -37,6 +37,5 @@ async def on_message(message):
             await message.channel.send(picture.img)'''      #<---code that didnt work - tried to get the scraper to take the image and post into Discord Chat
 
 
-client.run('NjI4MzYyNTM4ODIzNzEyNzg4.XcWzhw.RS8AWHp0y28MAvj4E_A4rdv10iY')
-
+client.run('#insert bot token#')
 
