@@ -21,5 +21,3 @@ How to use:
 4. You will need to modify the Discord Bot key to fit your bot. (we will also exclude all of the other keys used in the other APIs so you will need to get your own ones at their websites. In regarding files we provide you with links to documentation where you can find out about them.)
 5. Run the file, when you see "Bot ready." in your terminal in your IDE you can start using the bot in your Discord. (The bot will be online in your Discord, this way you know he is ready to answer your hot questions/inquiries.).
 
-
-Note: If you decide to use/inspire yourself using our group's project don't forget to leave a reference to us as we did to the people we got inspired from. :}  ~ Hope it helped, Tom.
