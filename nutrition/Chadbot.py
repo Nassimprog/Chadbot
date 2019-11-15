@@ -177,14 +177,15 @@ async def on_message(message):                                                  
             await message.channel.send('~' + randomCocktail())
 
         # Display Google Search Information
-        if 'googleseach' in userMessage:
+        if 'googlesearch' in userMessage:
             userMessageModified = userMessage[12:]
 
             myList = Search(userMessageModified)
             words = ['-Snippet: ', '-Link: ' ]
+            print(userMessageModified)
             await message.channel.send('**Here are Google Search information: **')
             for i in range(2):
                 await message.channel.send(words[i] + myList[i])
 
 # Run bot with this ID
-client.run('AddYourKey')
+client.run('UseYourKey')
