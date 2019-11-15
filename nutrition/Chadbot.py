@@ -43,7 +43,7 @@ async def on_member_remove(member):
 
 # User Message Events.
 @client.event
-async def on_message(message):          # <<<< on_message function dicovered from: "https://www.youtube.com/watch?v=XjfxYfKFXO8&t=716s"
+async def on_message(message):                                                                                                # <<<< on_message function dicovered from: "https://www.youtube.com/watch?v=XjfxYfKFXO8&t=716s"
   
     # Check if the message is from user.
     if message.author != client.user:
@@ -181,13 +181,10 @@ async def on_message(message):          # <<<< on_message function dicovered fro
             userMessageModified = userMessage[12:]
 
             myList = Search(userMessageModified)
-
-            snippet = myList[0]
-            linkToWeb = myList[1]
-
+            words = ['-Snippet: ', '-Link: ' ]
             await message.channel.send('**Here are Google Search information: **')
-            await message.channel.send('-Snippet: ' + snippet)
-            await message.channel.send('-Link: ' + linkToWeb)
+            for i in range(2):
+                await message.channel.send(words[i] + myList[i])
 
 # Run bot with this ID
 client.run('AddYourKey')
