@@ -26,7 +26,7 @@ async def on_message(message):
         await message.channel.send('here is a website for currys. I recommend the chicken Madras!' '\n' 'https://www.bbcgoodfood.com/recipes/collection/curry')
     
 
-#APIKEY = 91e262c6007a70f8f52fe5c61dfcdb7d
+#APIKEY = "APIKEYHERE"
 
 
 
